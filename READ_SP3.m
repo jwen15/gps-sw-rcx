@@ -36,7 +36,7 @@ for npe = 1:length(files)
         first = tline(1);
     end
     first ='1'; % variable for testing the line with time
-    while feof(fid) == 0 && tline(1) ~= 'E';
+    while feof(fid) == 0 && tline(1) ~= 'E'
         tline(1) = [];  %delete * character
         time = sscanf(tline,'%f',6);
         gps_time = ymdhms_to_gps(time);
@@ -48,7 +48,8 @@ for npe = 1:length(files)
             firstWeek = week;
             S.GPSWeek = firstWeek;
         else
-            dT = seconds - S.GPSTime(i-1);
+            % dT = seconds - S.GPSTime(i-1);
+            dT = round(604800*weekOffset + seconds - S.GPSTime(i-1));
             if (dT==(-604800+900))&&(week>(firstWeek+weekOffset))
                 weekOffset = weekOffset + 1;
             elseif dT ~= 900
